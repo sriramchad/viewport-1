@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client->View Port<-Ownner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            display: none; /* Hide initially */
+        }
+        form {
+            border-style: outset;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .error-text {
+            color: red;
+        }
+        .warning-text {
+            color: orange;
+        }
+        .success-text {
+            color: rgba(10, 239, 10, 0.671);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Services Data Input</h1><p style="color:blue">Laptop Sales</p>
+        
+        <!-- Input Form -->
+        <form id="dataForm">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="inputBrand">Brand</label>
+                        <input type="text" class="form-control" id="inputBrand" required>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="inputModel">Model</label>
+                        <input type="text" class="form-control" id="inputModel" required>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="inputOS">Operating System</label>
+                        <input type="text" class="form-control" id="inputOS" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="inputRAM">RAM/ROM</label>
+                        <input type="text" class="form-control" id="inputRAM" required>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="inputBattery">Battery-life</label>
+                        <input type="text" class="form-control" id="inputBattery" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="inputPrice">Starting Price</label>
+                        <input type="text" class="form-control" id="inputPrice" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="inputDimensions">Height/Width</label>
+                        <input type="text" class="form-control" id="inputDimensions" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="inputWeight">Weight</label>
+                        <input type="text" class="form-control" id="inputWeight" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="inputStatus">Status</label>
+                        <input type="text" class="form-control" id="inputStatus" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <!-- Result Display -->
+        <div class="result" id="resultDisplay">
+            <h2 style="color:greenyellow;">Customer Visible Data</h2>
+            <p><strong>Brand:</strong> <span id="resultBrand"></span></p>
+            <p><strong>Model/Generation:</strong> <span id="resultModel"></span></p>
+            <p><strong>Operating System:</strong> <span id="resultOS"></span></p>
+            <p><strong>RAM/Rom:</strong> <span id="resultRAM"></span></p>
+            <p><strong>Battery-life:</strong> <span id="resultBattery"></span></p>
+            <p><strong>Starting Price:</strong> <span id="resultPrice"></span></p>
+            <p><strong>Height/Width:</strong> <span id="resultDimensions"></span></p>
+            <p><strong>Weight:</strong> <span id="resultWeight"></span></p>
+            <p><strong>Status:</strong> <span id="resultStatus"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+            
+            // Get input values
+            const brand = document.getElementById('inputBrand').value;
+            const model = document.getElementById('inputModel').value;
+            const os = document.getElementById('inputOS').value;
+            const ram = document.getElementById('inputRAM').value;
+            const battery = document.getElementById('inputBattery').value;
+            const price = document.getElementById('inputPrice').value;
+            const dimensions = document.getElementById('inputDimensions').value;
+            const weight = document.getElementById('inputWeight').value;
+            const status = document.getElementById('inputStatus').value;
+
+            // Display the values
+            document.getElementById('resultBrand').textContent = brand;
+            document.getElementById('resultModel').textContent = model;
+            document.getElementById('resultOS').textContent = os;
+            document.getElementById('resultRAM').textContent = ram;
+            document.getElementById('resultBattery').textContent = battery;
+            document.getElementById('resultPrice').textContent = price;
+            document.getElementById('resultDimensions').textContent = dimensions;
+            document.getElementById('resultWeight').textContent = weight;
+            
+            // Apply conditional styling for status
+            const statusElement = document.getElementById('resultStatus');
+            statusElement.textContent = status;
+
+            // Remove any previous class
+            statusElement.classList.remove('error-text', 'warning-text', 'success-text');
+            
+            // Apply color based on status
+            if (status.toLowerCase() === 'out of stock') {
+                statusElement.classList.add('error-text');
+            } else if (status.toLowerCase() === 'pending') {
+                statusElement.classList.add('warning-text');
+            } else if (status.toLowerCase() === 'ready to deliver') {
+                statusElement.classList.add('success-text');
+            }
+
+            // Show the result section
+            document.getElementById('resultDisplay').style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
